@@ -1,6 +1,6 @@
-% Created 2020-01-06 Mon 14:41
+% Created 2020-01-06 Mon 19:35
 \documentclass[11pt]{article}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
@@ -64,7 +64,7 @@ void main()
 	char store1[10][100];
 	char store2[10][100];
 	fp = fopen("./in.c", "r");
-
+        int dtype[10],cnt = 0;
 	while ((linelen = getline(&line, &len, fp)) != -1) {
 		if(line[0] == '#'){
 			for(int i=0;i<strlen(line);i++){
@@ -73,6 +73,7 @@ void main()
         	printf(" - preprocessor directive\n");
 		}
 		char* int1 = strstr(line,"int ");
+		char* float1 = strstr(line,"float ");
 		char* for1 = strstr(line,"for(");
 		char* if1 = strstr(line,"if(");
 		char* else1 = strstr(line,"else");
@@ -84,36 +85,36 @@ void main()
 			declare = 1;
 			printf("int - keyword\n");
 			char* p = int1;
-			 char str[2];
-			 char*t=p;
+			 char str[10];
+			  int slen = 0;
+			  char*t=p;
 			 int jumplen=strlen("int ");
 			 t=t+4;
 			 while(*t!='\0')
 			   {
 			     char c=*t;
-			     str[0]=c;
-			     str[1]='\0';
-			     strcpy(store1[count],str);
+			     
+			     str[slen++]=c;
 			     t=t+1;
-			     if(isalnum(*(t)))
-			       {
-				 char c=*t;
-				 str[0]=c;
-				 str[1]='\0';
-				 strcat(store1[count],str);
-				 t=t+1;
-			       }
 			     if(*t=='=')
 			       {
+				 
+                                 dtype[cnt++]=1;
 				 t=t+1;
-				 while(isdigit(*(t)))
+                                 str[slen] = '\0';
+                                 //printf("%s\n",str);
+                                 strcpy(store1[count],str);
+                                 slen = 0;
+                                 str[0] ='\0';
+				 while(isdigit(*t)||*t == '.')
 				   {
 				     char c=*t;
-				     str[0]=c;
-				     str[1]='\0';
-				     strcat(store2[count],str);
+				     str[slen++]=c;
 				     t=t+1;
 				   }
+                                   str[slen] = '\0';
+                                   slen = 0;
+                                   strcpy(store2[count],str);
 			       }
 			     if((*(t))==','|*t==';')
 			       {
@@ -122,6 +123,51 @@ void main()
 			       }
 			     
 			   }
+			}
+                 if(float1 != NULL){
+			declare = 1;
+			printf("float - keyword\n");
+			char* p = float1;
+			 char str[10];
+			 int slen = 0;
+			 char*t=p;
+			 int jumplen=strlen("float ");
+			 t=t+6;
+			 while(*t!='\0')
+			   {
+                             
+			     char c=*t;
+			     str[slen++]=c;
+			     //strcpy(store1[count],str);
+			     t=t+1;
+			     if(*t=='=')
+			       {
+                           
+                                 dtype[cnt++]=1;
+				 t=t+1;
+                                 str[slen] = '\0';
+                                 //printf("%s\n",str);
+                                 strcpy(store1[count],str);
+                                 slen = 0;
+                                 str[0] ='\0';
+				 while(isdigit(*t)||*t == '.')
+				   {
+				     char c=*t;
+				     str[slen++]=c;
+				     t=t+1;
+				   }
+                                   str[slen] = '\0';
+                                   slen = 0;
+                                   strcpy(store2[count],str);
+			       }
+			     if((*(t))==','|*t==';')
+			       {
+				 count=count+1;
+				 t=t+1;
+			       }
+			     
+			   }
+                         
 			}
 		if(for1 != NULL)
 			printf("for - keyword\n");
@@ -246,7 +292,8 @@ void main()
 
 
 		char* bracket_close = strstr(line, ")");
-		if(bracket_close != NULL && main1 == NULL && printf1 == NULL) printf(") - special character\n");		
+		if(bracket_close != NULL && main1 == NULL && printf1 == NULL) 
+printf(") - special character\n");		
 
     }
 
@@ -254,8 +301,10 @@ void main()
     int base = 1000;
     for(int i=0;i<count;i++)
       {
-	 printf(" %d \t int \t %s \t %s \t %d\n",i+1,store1[i],store2[i],base);
-         base+=2;
+	 printf(" %d \t %s \t %s \t %s \t %d\n",i+1,store1[i],
+dtype[i]==0?"int":"float",store2[i],base);
+         base+=(dtype[i]==0?2:4);
+       
       }
 
     
@@ -278,24 +327,35 @@ b - variable
 = - assignment operator
 20- constant
 ; - special character
+float - keyword
+c - variable
+= - assignment operator
+10.4- constant
+, - special character
+d - variable
+= - assignment operator
+20.5- constant
+; - special character
 if - keyword
 (- special character
 a - variable
 > - condition
 b - variable
 ) - special character
-printf( a is greater ) - function call
+printf(¡°a is greater¡±) - function call
 ; - special character
 else - keyword
-printf( b is greater ) - function call
+printf(¡°b is greater¡±) - function call
 ; - special character
 } - special character
 
 
 
 SYMBOL TABLE
- 1 	 int 	 a 	 10 	 1000
- 2 	 int 	 b 	 20 	 1002
+ 1 	 a 	 float 	 10 	 1000
+ 2 	 b 	 float 	 20 	 1004
+ 3 	 c 	 float 	 10.4 	 1008
+ 4 	 d 	 float 	 20.5 	 1012
 \end{verbatim}
 % Emacs 25.2.2 (Org mode 8.2.10)
 \end{document}
