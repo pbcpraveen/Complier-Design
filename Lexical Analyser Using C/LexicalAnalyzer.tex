@@ -1,4 +1,4 @@
-% Created 2020-01-06 Mon 14:14
+% Created 2020-01-06 Mon 14:41
 \documentclass[11pt]{article}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
@@ -251,9 +251,11 @@ void main()
     }
 
     printf("\n\n\nSYMBOL TABLE\n");
+    int base = 1000;
     for(int i=0;i<count;i++)
       {
-	 printf(" %d.%s\t%s\n",i+1,store1[i],store2[i]);
+	 printf(" %d \t int \t %s \t %s \t %d\n",i+1,store1[i],store2[i],base);
+         base+=2;
       }
 
     
@@ -282,18 +284,18 @@ a - variable
 > - condition
 b - variable
 ) - special character
-printf(¡°a is greater¡±) - function call
+printf( a is greater ) - function call
 ; - special character
 else - keyword
-printf(¡°b is greater¡±) - function call
+printf( b is greater ) - function call
 ; - special character
 } - special character
 
 
 
 SYMBOL TABLE
- 1.a	10
- 2.b	20
+ 1 	 int 	 a 	 10 	 1000
+ 2 	 int 	 b 	 20 	 1002
 \end{verbatim}
 % Emacs 25.2.2 (Org mode 8.2.10)
 \end{document}

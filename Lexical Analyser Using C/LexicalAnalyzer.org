@@ -228,9 +228,11 @@ void main()
     }
 
     printf("\n\n\nSYMBOL TABLE\n");
+    int base = 1000;
     for(int i=0;i<count;i++)
       {
-	 printf(" %d.%s\t%s\n",i+1,store1[i],store2[i]);
+	 printf(" %d \t int \t %s \t %s \t %d\n",i+1,store1[i],store2[i],base);
+         base+=2;
       }
 
     
@@ -268,6 +270,7 @@ printf(¡°b is greater¡±) - function call
 
 
 SYMBOL TABLE
- 1.a	10
- 2.b	20
+ 1 	 int 	 a 	 10 	 1000
+ 2 	 int 	 b 	 20 	 1002
+
 #+END_EXAMPLE
