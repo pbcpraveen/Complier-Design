@@ -1,0 +1,7 @@
+#include<stdio.h>
+void printf() {
+  return 0;
+}
+void main() {
+  return printf();
+}
