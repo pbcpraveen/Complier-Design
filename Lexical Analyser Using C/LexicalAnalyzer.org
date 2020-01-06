@@ -76,7 +76,7 @@ void main()
 			     if(*t=='=')
 			       {
 				 
-                                 dtype[cnt++]=1;
+                                 dtype[cnt++]=0;
 				 t=t+1;
                                  str[slen] = '\0';
                                  //printf("%s\n",str);
@@ -318,20 +318,21 @@ a - variable
 > - condition
 b - variable
 ) - special character
-printf(¡°a is greater¡±) - function call
+printf("a is greater") - function call
 ; - special character
 else - keyword
-printf(¡°b is greater¡±) - function call
+printf("b is greater") - function call
 ; - special character
 } - special character
 
 
 
 SYMBOL TABLE
- 1 	 a 	 float 	 10 	 1000
- 2 	 b 	 float 	 20 	 1004
- 3 	 c 	 float 	 10.4 	 1008
- 4 	 d 	 float 	 20.5 	 1012
+ 1 	 a 	 int 	 10 	 1000
+ 2 	 b 	 int 	 20 	 1002
+ 3 	 c 	 float 	 10.4 	 1004
+ 4 	 d 	 float 	 20.5 	 1008
+
 
 
 #+END_EXAMPLE
