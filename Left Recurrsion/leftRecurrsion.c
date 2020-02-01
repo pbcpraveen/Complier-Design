@@ -68,22 +68,32 @@ int getAlphaList(char nt,char p[100][100],int n,char alpha[100][100]){
    return k;
 }
 
-void getProduction1(char nt,char alpha[100][100],char prod1[100][100],int n){
-  for(int i = 0;i < n ; i++){
-    char temp[100];
-    temp[0]=nt;
-    temp[1]='\'';
-    temp[2]='\0';
-    strcat(temp,alpha[i]);
-    strcpy(prod1[i],temp);   
+void getProduction1(char nt,char beta[100][100],char prod1[100][100],int n){
+  if(n!=0){
+    for(int i = 0;i < n ; i++){
+      char temp[100]="",temp1[5];
+      strcat(temp,beta[i]);
+      temp1[0]=nt;
+      temp1[1]='\'';
+      temp1[2]='\0';
+      strcat(temp,temp1);
+      strcpy(prod1[i],temp);   
+    }
+  }
+  else{
+    char temp1[5];
+    temp1[0]=nt;
+    temp1[1]='\'';
+    temp1[2]='\0';
+    strcpy(prod1[0],temp1);   
   }
 }
 
-void getProduction2(char nt,char beta[100][100],char prod2[100][100],int n){
+void getProduction2(char nt,char alpha[100][100],char prod2[100][100],int n){
   int i;
   for( i = 0;i < n ; i++){
     char temp[100]="";
-    strcat(temp,beta[i]);
+    strcat(temp,alpha[i]);
     int l = strlen(temp);
     temp[l]=nt;
     temp[l+1]='\'';
@@ -124,14 +134,14 @@ int main()
     if(isLeftRecurrsion(nt[0],prod,k)){
       at = getAlphaList(nt[0],prod,k,alpha);
       bt = getBetaList(nt[0],prod,k,beta);
-      getProduction1(nt[0],alpha,modifiedProduction1,at);
-      getProduction2(nt[0],beta,modifiedProduction2,bt);
+      getProduction1(nt[0],beta,modifiedProduction1,bt);
+      getProduction2(nt[0],alpha,modifiedProduction2,at);
       char newnt[5];
       newnt[0] = nt[0];
       newnt[1] = '\'';
       newnt[2] = '\0';
-      displayProduction(nt,modifiedProduction1,at);
-      displayProduction(newnt,modifiedProduction2,bt+1);
+      displayProduction(nt,modifiedProduction1,bt);
+      displayProduction(newnt,modifiedProduction2,at+1);
     }
     else{
       displayProduction(nt,prod,k);

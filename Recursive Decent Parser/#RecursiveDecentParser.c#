@@ -1,0 +1,12 @@
+#include<stdio.h>
+#include<string.h>
+void E(char[],int);
+void T();
+void Tprime();
+void Eprime();
+void F();
+void E(){
+  print("In E\n";);
+  T();
+  Eprime()
+}
