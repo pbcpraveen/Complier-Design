@@ -122,7 +122,7 @@ int main()
     {
       scanf("%s",a[i]);
     }
-  printf("\nGrammer after removing all left recurrsion: \n\n");
+  printf("\nGrammar after removing all left recurrsion: \n\n");
   for(int i = 0;i<n;i++){
     char nt[5];
     char prod[100][100],alpha[100][100],beta[100][100];
